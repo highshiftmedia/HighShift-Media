@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { BrandLogo, INDUSTRY_AGENTS } from '../constants';
 import type { IndustryAgent } from '../types';
+import { TiltCard } from './TiltCard';
 
 interface IndustryAgentHubProps {
   onSelectAgent: (agentId: string) => void;
@@ -9,13 +10,8 @@ interface IndustryAgentHubProps {
 }
 
 const AgentCard: React.FC<{ agent: IndustryAgent; onClick: () => void }> = ({ agent, onClick }) => (
-  <button
-    onClick={onClick}
-    className="glass-card p-6 rounded-2xl text-left w-full h-full flex flex-col group overflow-hidden relative hover:scale-[1.02] transition-all duration-300 cursor-pointer bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20"
-  >
-    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-    <div className="relative z-10">
-      <div className="mb-4 transform group-hover:scale-110 transition-transform duration-300 p-3 rounded-xl bg-white/5 w-fit">
+  <TiltCard onClick={onClick}>
+      <div className="mb-4 p-3 rounded-xl bg-white/5 w-fit text-sky-400">
         {agent.icon}
       </div>
       <span className="text-xs font-bold text-sky-400 uppercase tracking-widest mb-2 block">{agent.industry}</span>
@@ -49,8 +45,7 @@ const AgentCard: React.FC<{ agent: IndustryAgent; onClick: () => void }> = ({ ag
           </div>
         </div>
       )}
-    </div>
-  </button>
+  </TiltCard>
 );
 
 export const IndustryAgentHub: React.FC<IndustryAgentHubProps> = ({ onSelectAgent, onRestart }) => {

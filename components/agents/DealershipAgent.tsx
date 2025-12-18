@@ -249,8 +249,8 @@ export const DealershipAgent: React.FC<DealershipAgentProps> = ({ onBack, onRest
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center p-4">
-      <div className="w-full max-w-4xl h-[90vh] max-h-[900px] glass-panel rounded-[2.5rem] shadow-2xl flex flex-col border-white/5 overflow-hidden">
+    <div className="min-h-screen w-full flex items-center justify-center p-4 bg-black/40">
+      <div className="w-full max-w-4xl h-[90vh] max-h-[900px] glass-panel rounded-[2.5rem] shadow-2xl flex flex-col border-white/10 overflow-hidden bg-gray-900/80 backdrop-blur-xl">
         {/* Header */}
         <header className="px-6 py-4 border-b border-white/5 flex justify-between items-center bg-gradient-to-r from-blue-500/10 to-cyan-500/10">
           <div className="flex items-center gap-4">

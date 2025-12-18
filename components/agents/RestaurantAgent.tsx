@@ -185,13 +185,13 @@ export const RestaurantAgent: React.FC<RestaurantAgentProps> = ({ onBack, onRest
   const cartTotal = currentOrder.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center p-4">
-      <div className="w-full max-w-4xl h-[90vh] max-h-[900px] glass-panel rounded-[2.5rem] shadow-2xl flex flex-col border-white/5 overflow-hidden">
+    <div className="min-h-screen w-full flex items-center justify-center p-4 bg-black/40">
+      <div className="w-full max-w-4xl h-[90vh] max-h-[900px] glass-panel rounded-[2.5rem] shadow-2xl flex flex-col border-white/10 overflow-hidden bg-gray-900/80 backdrop-blur-xl">
         {/* Header */}
-        <header className="px-6 py-4 border-b border-white/5 flex justify-between items-center bg-gradient-to-r from-orange-500/10 to-red-500/10">
+        <header className="px-6 py-4 border-b border-white/10 flex justify-between items-center bg-white/5 backdrop-blur-md">
           <div className="flex items-center gap-4">
-            <div className="p-2 rounded-xl bg-orange-500/20">
-              <RestaurantIcon />
+            <div className="p-2 rounded-xl bg-orange-500/20 border border-orange-500/20">
+              <RestaurantIcon className="w-6 h-6 text-orange-400" />
             </div>
             <div>
               <h2 className="text-xl font-bold text-white tracking-tight">Restaurant AI Agent</h2>
@@ -219,7 +219,7 @@ export const RestaurantAgent: React.FC<RestaurantAgentProps> = ({ onBack, onRest
         <div className="flex-1 px-6 py-6 space-y-4 overflow-y-auto scrollbar-hide">
           {messages.map((msg) => (
             <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-2 duration-300`}>
-              <div className={`max-w-[80%] ${msg.sender === 'user' ? 'bg-orange-500/20 border border-orange-400/30 rounded-2xl rounded-br-none' : 'glass-panel rounded-2xl rounded-bl-none border-white/10'} px-5 py-3`}>
+              <div className={`max-w-[85%] ${msg.sender === 'user' ? 'bg-orange-500/20 border border-orange-400/30 rounded-2xl rounded-br-none' : 'bg-white/5 border border-white/10 rounded-2xl rounded-bl-none'} px-5 py-3 shadow-lg`}>
                 <p className="text-white/90 text-[15px] leading-relaxed whitespace-pre-wrap">{msg.text}</p>
                 {msg.actions && (
                   <div className="flex flex-wrap gap-2 mt-3 pt-3 border-t border-white/10">
@@ -252,7 +252,7 @@ export const RestaurantAgent: React.FC<RestaurantAgentProps> = ({ onBack, onRest
         </div>
 
         {/* Input */}
-        <div className="p-4 border-t border-white/5 bg-white/5">
+        <div className="p-4 border-t border-white/10 bg-white/5 backdrop-blur-md">
           <form onSubmit={handleSend} className="flex items-center gap-3">
             <input
               type="text"
@@ -260,7 +260,7 @@ export const RestaurantAgent: React.FC<RestaurantAgentProps> = ({ onBack, onRest
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask about our menu, place an order, or make a reservation..."
               disabled={isLoading}
-              className="w-full bg-white/5 text-white placeholder-white/30 rounded-xl py-3 px-5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-orange-500/50 transition-all disabled:opacity-50"
+              className="w-full bg-black/20 text-white placeholder-white/30 rounded-xl py-3 px-5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-orange-500/50 transition-all disabled:opacity-50"
             />
             <button
               type="submit"

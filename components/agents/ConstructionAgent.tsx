@@ -246,13 +246,13 @@ export const ConstructionAgent: React.FC<ConstructionAgentProps> = ({ onBack, on
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center p-4">
-      <div className="w-full max-w-4xl h-[90vh] max-h-[900px] glass-panel rounded-[2.5rem] shadow-2xl flex flex-col border-white/5 overflow-hidden">
+    <div className="min-h-screen w-full flex items-center justify-center p-4 bg-black/40">
+      <div className="w-full max-w-4xl h-[90vh] max-h-[900px] glass-panel rounded-[2.5rem] shadow-2xl flex flex-col border-white/10 overflow-hidden bg-gray-900/80 backdrop-blur-xl">
         {/* Header */}
-        <header className="px-6 py-4 border-b border-white/5 flex justify-between items-center bg-gradient-to-r from-yellow-500/10 to-orange-500/10">
+        <header className="px-6 py-4 border-b border-white/10 flex justify-between items-center bg-white/5 backdrop-blur-md">
           <div className="flex items-center gap-4">
-            <div className="p-2 rounded-xl bg-yellow-500/20">
-              <ConstructionIcon />
+            <div className="p-2 rounded-xl bg-yellow-500/20 border border-yellow-500/20">
+              <ConstructionIcon className="w-6 h-6 text-yellow-400" />
             </div>
             <div>
               <h2 className="text-xl font-bold text-white tracking-tight">Construction AI Agent</h2>
@@ -260,7 +260,7 @@ export const ConstructionAgent: React.FC<ConstructionAgentProps> = ({ onBack, on
             </div>
           </div>
           <div className="flex items-center gap-4">
-            <span className="bg-yellow-500/20 text-yellow-400 px-3 py-1 rounded-lg text-sm font-medium flex items-center gap-2">
+            <span className="bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 px-3 py-1 rounded-lg text-sm font-medium flex items-center gap-2">
               <span className="h-2 w-2 bg-emerald-400 rounded-full animate-pulse"></span>
               2 Active Projects
             </span>
@@ -273,7 +273,7 @@ export const ConstructionAgent: React.FC<ConstructionAgentProps> = ({ onBack, on
         <div className="flex-1 px-6 py-6 space-y-4 overflow-y-auto scrollbar-hide">
           {messages.map((msg) => (
             <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-2 duration-300`}>
-              <div className={`max-w-[85%] ${msg.sender === 'user' ? 'bg-yellow-500/20 border border-yellow-400/30 rounded-2xl rounded-br-none' : 'glass-panel rounded-2xl rounded-bl-none border-white/10'} px-5 py-3`}>
+              <div className={`max-w-[85%] ${msg.sender === 'user' ? 'bg-yellow-500/20 border border-yellow-400/30 rounded-2xl rounded-br-none' : 'bg-white/5 border border-white/10 rounded-2xl rounded-bl-none'} px-5 py-3 shadow-lg`}>
                 <p className="text-white/90 text-[15px] leading-relaxed whitespace-pre-wrap">{msg.text}</p>
                 {msg.actions && (
                   <div className="flex flex-wrap gap-2 mt-3 pt-3 border-t border-white/10">
@@ -281,7 +281,7 @@ export const ConstructionAgent: React.FC<ConstructionAgentProps> = ({ onBack, on
                       <button
                         key={idx}
                         onClick={() => handleAction(action.action, action.data)}
-                        className="bg-yellow-500/20 text-yellow-400 text-sm font-medium px-3 py-1.5 rounded-lg hover:bg-yellow-500/30 transition"
+                        className="bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 text-sm font-medium px-3 py-1.5 rounded-lg hover:bg-yellow-500/20 transition"
                       >
                         {action.label}
                       </button>
@@ -293,7 +293,7 @@ export const ConstructionAgent: React.FC<ConstructionAgentProps> = ({ onBack, on
           ))}
           {isLoading && (
             <div className="flex justify-start">
-              <div className="glass-panel rounded-xl px-4 py-2 border-white/5">
+              <div className="bg-white/5 rounded-xl px-4 py-2 border border-white/10">
                 <div className="flex items-center space-x-2">
                   <div className="h-2 w-2 bg-yellow-400 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
                   <div className="h-2 w-2 bg-yellow-400 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
@@ -306,7 +306,7 @@ export const ConstructionAgent: React.FC<ConstructionAgentProps> = ({ onBack, on
         </div>
 
         {/* Input */}
-        <div className="p-4 border-t border-white/5 bg-white/5">
+        <div className="p-4 border-t border-white/10 bg-white/5 backdrop-blur-md">
           <form onSubmit={handleSend} className="flex items-center gap-3">
             <input
               type="text"
@@ -314,12 +314,12 @@ export const ConstructionAgent: React.FC<ConstructionAgentProps> = ({ onBack, on
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask about projects, schedules, costs, safety, or generate reports..."
               disabled={isLoading}
-              className="w-full bg-white/5 text-white placeholder-white/30 rounded-xl py-3 px-5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 transition-all disabled:opacity-50"
+              className="w-full bg-black/20 text-white placeholder-white/30 rounded-xl py-3 px-5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 transition-all disabled:opacity-50"
             />
             <button
               type="submit"
               disabled={isLoading || !input.trim()}
-              className="bg-yellow-500 text-black rounded-xl p-3 hover:bg-yellow-400 transition-all disabled:bg-white/10 disabled:text-white/20"
+              className="bg-yellow-500 text-black rounded-xl p-3 hover:bg-yellow-400 transition-all disabled:bg-white/10 disabled:text-white/20 shadow-lg shadow-yellow-500/20"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
