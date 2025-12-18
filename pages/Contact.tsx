@@ -1,0 +1,284 @@
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Layout } from '../components/layout/Layout';
+import { AnimatedSection, StaggerContainer, StaggerItem } from '../components/ui/AnimatedSection';
+import { GlassCard } from '../components/ui/GlassCard';
+import { Button } from '../components/ui/Button';
+import {
+  Mail, Phone, MapPin, Send, MessageSquare, Calendar,
+  Clock, CheckCircle, ArrowRight
+} from 'lucide-react';
+
+// Contact methods
+const contactMethods = [
+  {
+    icon: <Mail className="h-6 w-6" />,
+    title: 'Email Us',
+    value: 'contact@highshiftmedia.com',
+    href: 'mailto:contact@highshiftmedia.com',
+    color: 'sky',
+  },
+  {
+    icon: <Phone className="h-6 w-6" />,
+    title: 'Call Us',
+    value: '+1 (630) 703-3569',
+    href: 'tel:+16307033569',
+    color: 'emerald',
+  },
+  {
+    icon: <MessageSquare className="h-6 w-6" />,
+    title: 'WhatsApp',
+    value: 'Chat with us',
+    href: 'https://Wa.me/+16307033569',
+    color: 'green',
+  },
+];
+
+// FAQ items
+const faqs = [
+  {
+    question: 'How long does it take to implement an AI solution?',
+    answer: 'Most of our pre-built agents can be deployed within 1-2 weeks. Custom solutions typically take 4-8 weeks depending on complexity.',
+  },
+  {
+    question: 'Do you offer ongoing support?',
+    answer: 'Yes! All our solutions come with dedicated support. We offer various support tiers to match your needs.',
+  },
+  {
+    question: 'Can I try before I commit?',
+    answer: 'Absolutely. We offer live demos of all our solutions and can provide a proof-of-concept for custom projects.',
+  },
+  {
+    question: 'What industries do you serve?',
+    answer: 'We serve all industries but have specialized solutions for restaurants, healthcare, salons, automotive, and construction.',
+  },
+];
+
+export const Contact: React.FC = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    company: '',
+    service: '',
+    message: '',
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    // Simulate form submission
+    await new Promise(resolve => setTimeout(resolve, 1500));
+
+    setIsSubmitting(false);
+    setIsSubmitted(true);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  return (
+    <Layout>
+      {/* Hero Section */}
+      <section className="pt-32 pb-20 px-4">
+        <div className="max-w-7xl mx-auto text-center">
+          <AnimatedSection>
+            <h1 className="text-5xl sm:text-7xl font-black text-white mb-6">
+              Let's Build Something
+              <span className="bg-gradient-to-r from-sky-400 to-purple-400 bg-clip-text text-transparent"> Amazing</span>
+            </h1>
+          </AnimatedSection>
+
+          <AnimatedSection delay={0.1}>
+            <p className="text-xl text-white/60 max-w-2xl mx-auto">
+              Ready to transform your business with AI? Get in touch and let's discuss
+              how we can help you achieve your goals.
+            </p>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Contact Methods */}
+      <section className="pb-20 px-4">
+        <div className="max-w-5xl mx-auto">
+          <StaggerContainer className="grid sm:grid-cols-3 gap-6">
+            {contactMethods.map((method, index) => (
+              <StaggerItem key={index}>
+                <a href={method.href} target={method.href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer">
+                  <GlassCard className="p-6 text-center h-full group">
+                    <div className={`inline-flex p-3 rounded-xl bg-${method.color}-500/20 text-${method.color}-400 mb-4 group-hover:scale-110 transition-transform`}>
+                      {method.icon}
+                    </div>
+                    <h3 className="font-bold text-white mb-1">{method.title}</h3>
+                    <p className="text-white/60 text-sm">{method.value}</p>
+                  </GlassCard>
+                </a>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
+        </div>
+      </section>
+
+      {/* Contact Form & Info */}
+      <section className="py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12">
+            {/* Form */}
+            <AnimatedSection>
+              <GlassCard className="p-8">
+                {isSubmitted ? (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="text-center py-12"
+                  >
+                    <CheckCircle className="h-16 w-16 text-emerald-400 mx-auto mb-6" />
+                    <h3 className="text-2xl font-bold text-white mb-2">Message Sent!</h3>
+                    <p className="text-white/60 mb-6">
+                      We'll get back to you within 24 hours.
+                    </p>
+                    <Button onClick={() => setIsSubmitted(false)} variant="secondary">
+                      Send Another Message
+                    </Button>
+                  </motion.div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <h2 className="text-2xl font-bold text-white mb-6">Send us a message</h2>
+
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-white/70 mb-2">
+                          Your Name *
+                        </label>
+                        <input
+                          type="text"
+                          name="name"
+                          required
+                          value={formData.name}
+                          onChange={handleChange}
+                          className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:border-sky-500 transition-colors"
+                          placeholder="John Doe"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-white/70 mb-2">
+                          Email Address *
+                        </label>
+                        <input
+                          type="email"
+                          name="email"
+                          required
+                          value={formData.email}
+                          onChange={handleChange}
+                          className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:border-sky-500 transition-colors"
+                          placeholder="john@company.com"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-white/70 mb-2">
+                        Company
+                      </label>
+                      <input
+                        type="text"
+                        name="company"
+                        value={formData.company}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:border-sky-500 transition-colors"
+                        placeholder="Your Company"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-white/70 mb-2">
+                        What are you interested in?
+                      </label>
+                      <select
+                        name="service"
+                        value={formData.service}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-sky-500 transition-colors"
+                      >
+                        <option value="" className="bg-gray-900">Select a service</option>
+                        <option value="ai-agents" className="bg-gray-900">AI Agents</option>
+                        <option value="chatbot" className="bg-gray-900">Chatbot Development</option>
+                        <option value="marketing" className="bg-gray-900">Marketing Automation</option>
+                        <option value="custom" className="bg-gray-900">Custom AI Solution</option>
+                        <option value="other" className="bg-gray-900">Other</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-white/70 mb-2">
+                        Message *
+                      </label>
+                      <textarea
+                        name="message"
+                        required
+                        rows={4}
+                        value={formData.message}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:border-sky-500 transition-colors resize-none"
+                        placeholder="Tell us about your project..."
+                      />
+                    </div>
+
+                    <Button
+                      type="submit"
+                      loading={isSubmitting}
+                      icon={<Send className="h-4 w-4" />}
+                      className="w-full"
+                    >
+                      Send Message
+                    </Button>
+                  </form>
+                )}
+              </GlassCard>
+            </AnimatedSection>
+
+            {/* Info */}
+            <AnimatedSection delay={0.2}>
+              <div className="space-y-8">
+                {/* Response time */}
+                <GlassCard className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 rounded-xl bg-sky-500/20 text-sky-400">
+                      <Clock className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-white mb-1">Quick Response</h3>
+                      <p className="text-white/60 text-sm">
+                        We typically respond within 24 hours. For urgent inquiries,
+                        reach out via WhatsApp.
+                      </p>
+                    </div>
+                  </div>
+                </GlassCard>
+
+                {/* FAQ */}
+                <div>
+                  <h3 className="text-xl font-bold text-white mb-6">Frequently Asked Questions</h3>
+                  <div className="space-y-4">
+                    {faqs.map((faq, index) => (
+                      <GlassCard key={index} className="p-6">
+                        <h4 className="font-semibold text-white mb-2">{faq.question}</h4>
+                        <p className="text-white/60 text-sm">{faq.answer}</p>
+                      </GlassCard>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
+    </Layout>
+  );
+};
