@@ -71,7 +71,7 @@ export const GlobalChatbot: React.FC = () => {
       });
 
       const response = await client.models.generateContent({
-        model: "gemini-2.0-flash-exp",
+        model: "gemini-1.5-flash",
         contents: contents,
         config: {
           systemInstruction: {
