@@ -55,8 +55,8 @@ export const GlobalChatbot: React.FC = () => {
         throw new Error("API Key missing");
       }
 
-      // Use v1alpha for the experimental model
-      const client = new GoogleGenAI({ apiKey, apiVersion: 'v1alpha' });
+      // Use v1beta for the latest models
+      const client = new GoogleGenAI({ apiKey, apiVersion: 'v1beta' });
 
       // Construct history for the new SDK
       // The new SDK expects 'user' and 'model' roles.
@@ -78,7 +78,7 @@ export const GlobalChatbot: React.FC = () => {
       });
 
       const response = await client.models.generateContent({
-        model: "gemini-2.0-flash-exp",
+        model: "gemini-2.5-flash",
         contents: contents,
         config: {
           systemInstruction: {

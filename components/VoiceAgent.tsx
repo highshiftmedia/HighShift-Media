@@ -121,22 +121,16 @@ export const VoiceAgent: React.FC<{ onRestart: () => void }> = ({ onRestart }) =
             inputAudioContextRef.current = inputCtx;
             outputAudioContextRef.current = outputCtx;
 
-            // Use v1alpha for experimental models to ensure compatibility
-            // Explicitly set baseUrl to avoid double slash issue in WebSocket URL
+            // Use v1beta for better stability
             const ai = new GoogleGenAI({ 
                 apiKey: apiKey, 
-                apiVersion: 'v1alpha',
-                httpOptions: {
-                    baseUrl: 'https://generativelanguage.googleapis.com'
-                }
+                apiVersion: 'v1beta'
             });
             
             const sessionPromise = ai.live.connect({
                 model: 'gemini-2.5-flash',
                 config: {
                     responseModalities: [Modality.AUDIO],
-                    inputAudioTranscription: {},
-                    outputAudioTranscription: {},
                     speechConfig: {
                         voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Puck' } }
                     },
@@ -236,7 +230,11 @@ export const VoiceAgent: React.FC<{ onRestart: () => void }> = ({ onRestart }) =
                     },
                     onclose: (event: CloseEvent) => {
                         console.log("Session closed", event);
-                        if (event.code !== 1000) {
+                        if (event.code === 1008) {
+                            setError(`Connection failed: Policy Violation (1008). Please check API key restrictions.`);
+                        } else if (event.code === 1011) {
+                            setError(`Connection failed: Server Error (1011). The model might be overloaded.`);
+                        } else if (event.code !== 1000) {
                             setError(`Connection closed unexpectedly (code: ${event.code}).`);
                         }
                         stopConversation(false);
