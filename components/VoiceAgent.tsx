@@ -121,14 +121,10 @@ export const VoiceAgent: React.FC<{ onRestart: () => void }> = ({ onRestart }) =
             inputAudioContextRef.current = inputCtx;
             outputAudioContextRef.current = outputCtx;
 
-            // Use v1alpha for experimental models (required for gemini-2.0-flash-exp Live API)
-            // Explicitly set baseUrl to prevent double-slash issues in WebSocket URL
+            // Use v1beta for better stability with gemini-2.0-flash-exp
             const ai = new GoogleGenAI({ 
                 apiKey: apiKey, 
-                apiVersion: 'v1alpha',
-                httpOptions: {
-                    baseUrl: 'https://generativelanguage.googleapis.com'
-                }
+                apiVersion: 'v1beta'
             });
             
             const sessionPromise = ai.live.connect({
@@ -238,6 +234,8 @@ export const VoiceAgent: React.FC<{ onRestart: () => void }> = ({ onRestart }) =
                             setError(`Connection failed: Policy Violation (1008). Please check API key restrictions.`);
                         } else if (event.code === 1011) {
                             setError(`Connection failed: Server Error (1011). The model might be overloaded.`);
+                        } else if (event.code === 429) { // WebSocket might not return 429 directly in code, but just in case
+                             setError(`Connection failed: Rate Limit Exceeded. Please wait a moment.`);
                         } else if (event.code !== 1000) {
                             setError(`Connection closed unexpectedly (code: ${event.code}).`);
                         }
