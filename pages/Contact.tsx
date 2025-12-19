@@ -14,8 +14,8 @@ const contactMethods = [
   {
     icon: <Mail className="h-6 w-6" />,
     title: 'Email Us',
-    value: 'contact@highshiftmedia.com',
-    href: 'mailto:contact@highshiftmedia.com',
+    value: 'info@highshiftmedia.com',
+    href: 'mailto:info@highshiftmedia.com',
     color: 'sky',
   },
   {

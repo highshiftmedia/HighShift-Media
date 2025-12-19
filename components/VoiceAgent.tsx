@@ -108,7 +108,7 @@ export const VoiceAgent: React.FC<{ onRestart: () => void }> = ({ onRestart }) =
 
         setStatus('connecting');
         setError(null);
-        setTranscriptions([{ sender: 'bot', text: "Establishing Highshift secure audio link...", isFinal: true }]);
+        setTranscriptions([{ sender: 'bot', text: "Connecting to Highshift AI...", isFinal: true }]);
 
         try {
             // Browsers require AudioContext to be created/resumed on user gesture
@@ -133,7 +133,7 @@ export const VoiceAgent: React.FC<{ onRestart: () => void }> = ({ onRestart }) =
                         voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Puck' } }
                     },
                     systemInstruction: {
-                        parts: [{ text: 'You are Highshift AI, a professional consulting agent. Speak clearly, be brief, and represent Highshift Media excellence. Always be ready to help with AI automation, chatbots, or content strategy.' }]
+                        parts: [{ text: 'You are Highshift AI, an elite business consultant specializing in Artificial Intelligence automation and digital transformation. Your goal is to impress potential clients with your knowledge and helpfulness. You are professional, concise, and articulate. You can discuss Highshift Media services including: Custom Chatbots, Marketing Automation, Voice Agents, and Industry-Specific AI Solutions. If asked about technical details, explain them simply. If asked about pricing, suggest scheduling a full consultation. Your tone is confident, modern, and helpful.' }]
                     },
                 },
                 callbacks: {
@@ -222,7 +222,7 @@ export const VoiceAgent: React.FC<{ onRestart: () => void }> = ({ onRestart }) =
                     },
                     onerror: (e: ErrorEvent) => {
                         console.error('Live API Error:', e);
-                        setError('Neural link disrupted. Retrying...');
+                        setError('Connection lost. Retrying...');
                         stopConversation();
                     },
                     onclose: () => stopConversation(false),
@@ -270,7 +270,7 @@ export const VoiceAgent: React.FC<{ onRestart: () => void }> = ({ onRestart }) =
                         <div className="flex justify-center py-10">
                             <div className="flex flex-col items-center gap-4">
                                 <div className="h-12 w-12 rounded-full border-4 border-sky-500/10 border-t-sky-500 animate-spin" />
-                                <p className="text-[10px] font-bold text-sky-400 uppercase tracking-[0.3em]">Syncing Neural Engine</p>
+                                <p className="text-[10px] font-bold text-sky-400 uppercase tracking-[0.3em]">Connecting...</p>
                             </div>
                         </div>
                     )}
@@ -290,7 +290,7 @@ export const VoiceAgent: React.FC<{ onRestart: () => void }> = ({ onRestart }) =
                         >
                             <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
                             <div className="h-2 w-2 bg-white rounded-full animate-ping" />
-                            INITIALIZE VOICE LINK
+                            Start Conversation
                         </button>
                     ) : (
                         <button 
@@ -302,7 +302,7 @@ export const VoiceAgent: React.FC<{ onRestart: () => void }> = ({ onRestart }) =
                         </button>
                     )}
                     
-                    <p className="mt-8 text-[9px] font-bold text-white/10 uppercase tracking-[0.5em]">Highshift Secure Biometric Stream v2.5</p>
+                    <p className="mt-8 text-[9px] font-bold text-white/10 uppercase tracking-[0.5em]">Powered by Highshift AI</p>
                 </footer>
             </div>
             

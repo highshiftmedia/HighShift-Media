@@ -55,9 +55,9 @@ export const Footer: React.FC = () => {
 
             {/* Contact info */}
             <div className="space-y-3">
-              <a href="mailto:contact@highshiftmedia.com" className="flex items-center gap-3 text-white/60 hover:text-sky-400 transition-colors">
+              <a href="mailto:info@highshiftmedia.com" className="flex items-center gap-3 text-white/60 hover:text-sky-400 transition-colors">
                 <Mail className="h-4 w-4" />
-                <span>contact@highshiftmedia.com</span>
+                <span>info@highshiftmedia.com</span>
               </a>
               <a href="tel:+16307033569" className="flex items-center gap-3 text-white/60 hover:text-sky-400 transition-colors">
                 <Phone className="h-4 w-4" />
