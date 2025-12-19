@@ -78,7 +78,7 @@ export const GlobalChatbot: React.FC = () => {
       });
 
       const response = await client.models.generateContent({
-        model: "gemini-2.5-flash",
+        model: "gemini-2.0-flash-exp",
         contents: contents,
         config: {
           systemInstruction: {
@@ -97,7 +97,7 @@ export const GlobalChatbot: React.FC = () => {
         }
       });
 
-      const text = response.text();
+      const text = response.text;
 
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
