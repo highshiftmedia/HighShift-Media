@@ -121,7 +121,8 @@ export const VoiceAgent: React.FC<{ onRestart: () => void }> = ({ onRestart }) =
             inputAudioContextRef.current = inputCtx;
             outputAudioContextRef.current = outputCtx;
 
-            const ai = new GoogleGenAI({ apiKey: apiKey });
+            // Use v1alpha for experimental models to ensure compatibility
+            const ai = new GoogleGenAI({ apiKey: apiKey, apiVersion: 'v1alpha' });
             
             const sessionPromise = ai.live.connect({
                 model: 'gemini-2.0-flash-exp',
@@ -138,6 +139,7 @@ export const VoiceAgent: React.FC<{ onRestart: () => void }> = ({ onRestart }) =
                 },
                 callbacks: {
                     onopen: async () => {
+                        console.log("Voice session opened");
                         try {
                             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
                             mediaStreamRef.current = stream;
@@ -159,7 +161,7 @@ export const VoiceAgent: React.FC<{ onRestart: () => void }> = ({ onRestart }) =
                             setStatus('listening');
                         } catch (e) {
                             console.error("Microphone access failed:", e);
-                            setError("Microphone access failed.");
+                            setError("Microphone access failed. Please check permissions.");
                             stopConversation();
                         }
                     },
@@ -222,10 +224,16 @@ export const VoiceAgent: React.FC<{ onRestart: () => void }> = ({ onRestart }) =
                     },
                     onerror: (e: ErrorEvent) => {
                         console.error('Live API Error:', e);
-                        setError('Connection lost. Retrying...');
+                        setError('Connection error. Please try again.');
                         stopConversation();
                     },
-                    onclose: () => stopConversation(false),
+                    onclose: (event: CloseEvent) => {
+                        console.log("Session closed", event);
+                        if (event.code !== 1000) {
+                            setError(`Connection closed unexpectedly (code: ${event.code}).`);
+                        }
+                        stopConversation(false);
+                    },
                 }
             });
             
@@ -305,16 +313,6 @@ export const VoiceAgent: React.FC<{ onRestart: () => void }> = ({ onRestart }) =
                     <p className="mt-8 text-[9px] font-bold text-white/10 uppercase tracking-[0.5em]">Powered by Highshift AI</p>
                 </footer>
             </div>
-            
-            {/* Minimal WhatsApp link for persistent access */}
-            <a 
-                href="https://Wa.me/+16307033569" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="fixed bottom-6 right-6 p-4 bg-[#25D366] rounded-full shadow-2xl hover:scale-110 active:scale-90 transition-transform z-50"
-            >
-                <WhatsAppIcon />
-            </a>
         </div>
     );
 };
