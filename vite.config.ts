@@ -20,6 +20,18 @@ export default defineConfig(({ mode }) => {
         alias: {
           '@': path.resolve(__dirname, '.'),
         }
+      },
+      build: {
+        rollupOptions: {
+          output: {
+            manualChunks: {
+              vendor: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
+              ui: ['lucide-react', 'clsx', 'tailwind-merge'],
+              ai: ['@google/genai']
+            }
+          }
+        },
+        chunkSizeWarningLimit: 1000
       }
     };
 });

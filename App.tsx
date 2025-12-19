@@ -45,6 +45,17 @@ const PageTransition: React.FC<{ children: React.ReactNode }> = ({ children }) =
   );
 };
 
+// Scroll restoration component
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+};
+
 // Animated routes wrapper
 const AnimatedRoutes: React.FC = () => {
   const location = useLocation();
@@ -111,6 +122,7 @@ const AnimatedRoutes: React.FC = () => {
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <div className="w-full min-h-screen bg-gray-900 text-white">
         <AnimatedRoutes />
       </div>
