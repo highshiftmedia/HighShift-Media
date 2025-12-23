@@ -8,11 +8,50 @@ import { Button } from '../components/ui/Button';
 import { INDUSTRY_AGENTS } from '../constants';
 import {
   Play, MessageSquare, Mic, Bot, FileText, Briefcase,
-  ArrowLeft, ArrowRight, Sparkles
+  ArrowLeft, ArrowRight, Sparkles, Network, Wand2, 
+  BarChart3, Brain, Workflow
 } from 'lucide-react';
 
 // Demo categories
 const demoCategories = [
+  {
+    id: 'agentic-ai',
+    name: 'Agentic AI Services',
+    description: 'Next-generation autonomous AI systems',
+    icon: <Network className="h-8 w-8" />,
+    demos: [
+      {
+        id: 'agent-orchestration',
+        name: 'Multi-Agent Orchestration',
+        description: 'Watch AI agents collaborate autonomously on complex tasks',
+        icon: <Network className="h-6 w-6 text-violet-400" />,
+      },
+      {
+        id: 'workflow-automation',
+        name: 'Workflow Automation',
+        description: 'Visual workflow builder with AI-powered automation',
+        icon: <Workflow className="h-6 w-6 text-cyan-400" />,
+      },
+      {
+        id: 'data-analytics',
+        name: 'Predictive Analytics',
+        description: 'Real-time AI-driven business intelligence',
+        icon: <BarChart3 className="h-6 w-6 text-emerald-400" />,
+      },
+      {
+        id: 'content-generator',
+        name: 'AI Content Generator',
+        description: 'Generate marketing copy, social posts, and more',
+        icon: <Wand2 className="h-6 w-6 text-pink-400" />,
+      },
+      {
+        id: 'custom-model',
+        name: 'Custom Model Training',
+        description: 'Train AI models tailored to your business data',
+        icon: <Brain className="h-6 w-6 text-amber-400" />,
+      },
+    ],
+  },
   {
     id: 'agents',
     name: 'Industry Agents',
@@ -70,6 +109,17 @@ export const Demos: React.FC = () => {
       whatsapp: '/demos/whatsapp',
       voice: '/demos/voice',
       'business-plan': '/demos/business-plan',
+      real_estate: '/demos/real_estate',
+      legal: '/demos/legal',
+      ecommerce: '/demos/ecommerce',
+      education: '/demos/education',
+      recruitment: '/demos/recruitment',
+      // Advanced AI Service Demos
+      'workflow-automation': '/demos/workflow-automation',
+      'data-analytics': '/demos/data-analytics',
+      'content-generator': '/demos/content-generator',
+      'agent-orchestration': '/demos/agent-orchestration',
+      'custom-model': '/demos/custom-model',
     };
     navigate(routes[demoId] || '/demos');
   };

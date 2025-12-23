@@ -25,6 +25,12 @@ import {
   EcommerceDemo,
   EducationDemo,
   RecruitmentDemo,
+  // Advanced AI Service Demos
+  WorkflowAutomationDemo,
+  DataAnalyticsDemo,
+  ContentGeneratorDemo,
+  AgentOrchestrationDemo,
+  CustomModelDemo,
 } from './pages';
 
 // Legacy components for backward compatibility
@@ -87,6 +93,13 @@ const AnimatedRoutes: React.FC = () => {
         <Route path="/demos/ecommerce" element={<PageTransition><EcommerceDemo /></PageTransition>} />
         <Route path="/demos/education" element={<PageTransition><EducationDemo /></PageTransition>} />
         <Route path="/demos/recruitment" element={<PageTransition><RecruitmentDemo /></PageTransition>} />
+        
+        {/* Advanced AI Service Demos */}
+        <Route path="/demos/workflow-automation" element={<PageTransition><WorkflowAutomationDemo /></PageTransition>} />
+        <Route path="/demos/data-analytics" element={<PageTransition><DataAnalyticsDemo /></PageTransition>} />
+        <Route path="/demos/content-generator" element={<PageTransition><ContentGeneratorDemo /></PageTransition>} />
+        <Route path="/demos/agent-orchestration" element={<PageTransition><AgentOrchestrationDemo /></PageTransition>} />
+        <Route path="/demos/custom-model" element={<PageTransition><CustomModelDemo /></PageTransition>} />
 
         {/* Fun extras */}
         <Route

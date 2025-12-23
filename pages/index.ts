@@ -21,3 +21,10 @@ export { LegalDemo } from './demos/LegalDemo';
 export { EcommerceDemo } from './demos/EcommerceDemo';
 export { EducationDemo } from './demos/EducationDemo';
 export { RecruitmentDemo } from './demos/RecruitmentDemo';
+
+// Advanced AI Service Demos
+export { WorkflowAutomationDemo } from './demos/WorkflowAutomationDemo';
+export { DataAnalyticsDemo } from './demos/DataAnalyticsDemo';
+export { ContentGeneratorDemo } from './demos/ContentGeneratorDemo';
+export { AgentOrchestrationDemo } from './demos/AgentOrchestrationDemo';
+export { CustomModelDemo } from './demos/CustomModelDemo';
