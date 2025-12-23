@@ -437,7 +437,11 @@ export const Landing: React.FC = () => {
                 Let's discuss how AI can transform your business.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Button size="lg" icon={<ArrowRight className="h-5 w-5" />} onClick={() => window.Calendly?.showPopupWidget('https://calendly.com/tech-highshiftmedia/30min')}>
+                <Button size="lg" icon={<ArrowRight className="h-5 w-5" />} onClick={() => {
+                  if (window.Calendly) {
+                    window.Calendly.showPopupWidget('https://calendly.com/tech-highshiftmedia/30min');
+                  }
+                }}>
                   Schedule Consultation
                 </Button>
                 <Link to="/demos">
