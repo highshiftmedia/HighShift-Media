@@ -1,50 +1,67 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 
-// Pages
-import {
-  Landing,
-  Services,
-  Agents,
-  Marketing,
-  Demos,
-  Contact,
-  CaseStudies,
-  ClientLogin,
-  RestaurantDemo,
-  ClinicDemo,
-  SalonDemo,
-  DealershipDemo,
-  ConstructionDemo,
-  WhatsAppDemo,
-  VoiceDemo,
-  BusinessPlanDemo,
-  RealEstateDemo,
-  LegalDemo,
-  EcommerceDemo,
-  EducationDemo,
-  RecruitmentDemo,
-  // Advanced AI Service Demos
-  WorkflowAutomationDemo,
-  DataAnalyticsDemo,
-  ContentGeneratorDemo,
-  AgentOrchestrationDemo,
-  CustomModelDemo,
-} from './pages';
+// Lazy load all pages for faster initial load
+const Landing = lazy(() => import('./pages/Landing').then(m => ({ default: m.Landing })));
+const Services = lazy(() => import('./pages/Services').then(m => ({ default: m.Services })));
+const Agents = lazy(() => import('./pages/Agents').then(m => ({ default: m.Agents })));
+const Marketing = lazy(() => import('./pages/Marketing').then(m => ({ default: m.Marketing })));
+const Demos = lazy(() => import('./pages/Demos').then(m => ({ default: m.Demos })));
+const Contact = lazy(() => import('./pages/Contact').then(m => ({ default: m.Contact })));
+const CaseStudies = lazy(() => import('./pages/CaseStudies').then(m => ({ default: m.CaseStudies })));
+const ClientLogin = lazy(() => import('./pages/ClientLogin').then(m => ({ default: m.ClientLogin })));
 
-// Legacy components for backward compatibility
-import { MarketingHub } from './components/MarketingHub';
-import { SnakeGame } from './components/SnakeGame';
+// Demo pages - lazy loaded
+const RestaurantDemo = lazy(() => import('./pages/demos/RestaurantDemo').then(m => ({ default: m.RestaurantDemo })));
+const ClinicDemo = lazy(() => import('./pages/demos/ClinicDemo').then(m => ({ default: m.ClinicDemo })));
+const SalonDemo = lazy(() => import('./pages/demos/SalonDemo').then(m => ({ default: m.SalonDemo })));
+const DealershipDemo = lazy(() => import('./pages/demos/DealershipDemo').then(m => ({ default: m.DealershipDemo })));
+const ConstructionDemo = lazy(() => import('./pages/demos/ConstructionDemo').then(m => ({ default: m.ConstructionDemo })));
+const WhatsAppDemo = lazy(() => import('./pages/demos/WhatsAppDemo').then(m => ({ default: m.WhatsAppDemo })));
+const VoiceDemo = lazy(() => import('./pages/demos/VoiceDemo').then(m => ({ default: m.VoiceDemo })));
+const BusinessPlanDemo = lazy(() => import('./pages/demos/BusinessPlanDemo').then(m => ({ default: m.BusinessPlanDemo })));
+const RealEstateDemo = lazy(() => import('./pages/demos/RealEstateDemo').then(m => ({ default: m.RealEstateDemo })));
+const LegalDemo = lazy(() => import('./pages/demos/LegalDemo').then(m => ({ default: m.LegalDemo })));
+const EcommerceDemo = lazy(() => import('./pages/demos/EcommerceDemo').then(m => ({ default: m.EcommerceDemo })));
+const EducationDemo = lazy(() => import('./pages/demos/EducationDemo').then(m => ({ default: m.EducationDemo })));
+const RecruitmentDemo = lazy(() => import('./pages/demos/RecruitmentDemo').then(m => ({ default: m.RecruitmentDemo })));
 
-// Page transition wrapper
+// Advanced AI Service Demos - lazy loaded
+const WorkflowAutomationDemo = lazy(() => import('./pages/demos/WorkflowAutomationDemo').then(m => ({ default: m.WorkflowAutomationDemo })));
+const DataAnalyticsDemo = lazy(() => import('./pages/demos/DataAnalyticsDemo').then(m => ({ default: m.DataAnalyticsDemo })));
+const ContentGeneratorDemo = lazy(() => import('./pages/demos/ContentGeneratorDemo').then(m => ({ default: m.ContentGeneratorDemo })));
+const AgentOrchestrationDemo = lazy(() => import('./pages/demos/AgentOrchestrationDemo').then(m => ({ default: m.AgentOrchestrationDemo })));
+const CustomModelDemo = lazy(() => import('./pages/demos/CustomModelDemo').then(m => ({ default: m.CustomModelDemo })));
+
+// Legacy components - lazy loaded
+const MarketingHub = lazy(() => import('./components/MarketingHub').then(m => ({ default: m.MarketingHub })));
+const SnakeGame = lazy(() => import('./components/SnakeGame').then(m => ({ default: m.SnakeGame })));
+
+// Loading spinner for lazy loaded components
+const LoadingSpinner: React.FC = () => (
+  <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+    <div className="relative">
+      <div className="w-12 h-12 rounded-full border-2 border-white/10 border-t-sky-500 animate-spin" />
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="w-6 h-6 rounded-full bg-sky-500/20 animate-pulse" />
+      </div>
+    </div>
+  </div>
+);
+
+// Optimized page transition with reduced motion support
 const PageTransition: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  // Check for reduced motion preference
+  const prefersReducedMotion = typeof window !== 'undefined' 
+    && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.4, ease: [0.25, 0.4, 0.25, 1] }}
+      exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: -20 }}
+      transition={{ duration: prefersReducedMotion ? 0.1 : 0.3, ease: [0.25, 0.4, 0.25, 1] }}
     >
       {children}
     </motion.div>
@@ -137,7 +154,9 @@ function App() {
     <Router>
       <ScrollToTop />
       <div className="w-full min-h-screen bg-gray-900 text-white">
-        <AnimatedRoutes />
+        <Suspense fallback={<LoadingSpinner />}>
+          <AnimatedRoutes />
+        </Suspense>
       </div>
     </Router>
   );

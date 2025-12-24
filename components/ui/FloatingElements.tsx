@@ -1,72 +1,101 @@
-import React from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
-// Floating orbs for background decoration
-export const FloatingOrbs: React.FC = () => {
+// Check for reduced motion preference and mobile
+const useReducedMotion = () => {
+  const [shouldReduceMotion, setShouldReduceMotion] = useState(false);
+  
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const isMobile = window.innerWidth < 768;
+    setShouldReduceMotion(mediaQuery.matches || isMobile);
+    
+    const handler = (e: MediaQueryListEvent) => setShouldReduceMotion(e.matches || isMobile);
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
+  
+  return shouldReduceMotion;
+};
+
+// Floating orbs for background decoration - optimized for mobile
+export const FloatingOrbs: React.FC = memo(() => {
+  const reduceMotion = useReducedMotion();
+  
+  // Static version for mobile/reduced motion
+  if (reduceMotion) {
+    return (
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div
+          className="absolute w-[400px] h-[400px] rounded-full opacity-50"
+          style={{
+            background: 'radial-gradient(circle, rgba(14, 165, 233, 0.1) 0%, transparent 70%)',
+            filter: 'blur(40px)',
+            top: '10%',
+            left: '10%',
+          }}
+        />
+        <div
+          className="absolute w-[300px] h-[300px] rounded-full opacity-50"
+          style={{
+            background: 'radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%)',
+            filter: 'blur(40px)',
+            top: '50%',
+            right: '10%',
+          }}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-      {/* Primary orb */}
+      {/* Primary orb - optimized animation */}
       <motion.div
-        className="absolute w-[600px] h-[600px] rounded-full"
+        className="absolute w-[500px] h-[500px] rounded-full will-change-transform"
         style={{
-          background: 'radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, transparent 70%)',
-          filter: 'blur(60px)',
+          background: 'radial-gradient(circle, rgba(14, 165, 233, 0.12) 0%, transparent 70%)',
+          filter: 'blur(50px)',
+          top: '10%',
+          left: '10%',
         }}
         animate={{
-          x: [0, 100, -50, 0],
-          y: [0, -100, 50, 0],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
-        initial={{ top: '10%', left: '10%' }}
-      />
-
-      {/* Secondary orb */}
-      <motion.div
-        className="absolute w-[500px] h-[500px] rounded-full"
-        style={{
-          background: 'radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, transparent 70%)',
-          filter: 'blur(60px)',
-        }}
-        animate={{
-          x: [0, -80, 40, 0],
-          y: [0, 80, -60, 0],
+          x: [0, 80, -40, 0],
+          y: [0, -80, 40, 0],
         }}
         transition={{
           duration: 25,
           repeat: Infinity,
-          ease: 'easeInOut',
+          ease: 'linear',
         }}
-        initial={{ top: '50%', right: '10%' }}
       />
 
-      {/* Tertiary orb */}
+      {/* Secondary orb */}
       <motion.div
-        className="absolute w-[400px] h-[400px] rounded-full"
+        className="absolute w-[400px] h-[400px] rounded-full will-change-transform"
         style={{
-          background: 'radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%)',
           filter: 'blur(50px)',
+          top: '50%',
+          right: '10%',
         }}
         animate={{
-          x: [0, 60, -30, 0],
-          y: [0, -40, 80, 0],
+          x: [0, -60, 30, 0],
+          y: [0, 60, -40, 0],
         }}
         transition={{
-          duration: 18,
+          duration: 30,
           repeat: Infinity,
-          ease: 'easeInOut',
+          ease: 'linear',
         }}
-        initial={{ bottom: '10%', left: '30%' }}
       />
     </div>
   );
-};
+});
+FloatingOrbs.displayName = 'FloatingOrbs';
 
-// Grid background pattern
-export const GridPattern: React.FC<{ className?: string }> = ({ className = '' }) => {
+// Grid background pattern - memoized
+export const GridPattern: React.FC<{ className?: string }> = memo(({ className = '' }) => {
   return (
     <div className={`absolute inset-0 overflow-hidden pointer-events-none ${className}`}>
       <div
@@ -88,10 +117,16 @@ export const GridPattern: React.FC<{ className?: string }> = ({ className = '' }
       />
     </div>
   );
-};
+});
+GridPattern.displayName = 'GridPattern';
 
-// Animated particles
-export const Particles: React.FC<{ count?: number }> = ({ count = 30 }) => {
+// Animated particles - disabled on mobile for performance
+export const Particles: React.FC<{ count?: number }> = memo(({ count = 15 }) => {
+  const reduceMotion = useReducedMotion();
+  
+  // Don't render particles on mobile or reduced motion
+  if (reduceMotion) return null;
+  
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
       {Array.from({ length: count }).map((_, i) => (
@@ -117,14 +152,15 @@ export const Particles: React.FC<{ count?: number }> = ({ count = 30 }) => {
       ))}
     </div>
   );
-};
+});
+Particles.displayName = 'Particles';
 
-// Gradient text component
+// Gradient text component - memoized
 export const GradientText: React.FC<{
   children: React.ReactNode;
   className?: string;
   gradient?: string;
-}> = ({
+}> = memo(({
   children,
   className = '',
   gradient = 'from-white via-white/90 to-white/60'
@@ -134,28 +170,19 @@ export const GradientText: React.FC<{
       {children}
     </span>
   );
-};
+});
+GradientText.displayName = 'GradientText';
 
-// Animated counter
+// Animated counter - simplified
 export const AnimatedCounter: React.FC<{
   value: number;
   suffix?: string;
   className?: string;
-}> = ({ value, suffix = '', className = '' }) => {
+}> = memo(({ value, suffix = '', className = '' }) => {
   return (
-    <motion.span
-      className={className}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
-      <motion.span
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
-      >
-        {value}{suffix}
-      </motion.span>
-    </motion.span>
+    <span className={className}>
+      {value}{suffix}
+    </span>
   );
-};
+});
+AnimatedCounter.displayName = 'AnimatedCounter';

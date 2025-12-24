@@ -506,7 +506,37 @@
         <p style="margin-top: 1rem; color: #888;">Please enable JavaScript to use this website.</p>
       </div>
     </noscript>
-    <div id="root"></div>
+    
+    <!-- Instant loading indicator - shows immediately while JS loads -->
+    <div id="root">
+      <div id="initial-loader" style="min-height: 100vh; background: #0a0a0f; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+        <style>
+          @keyframes spin { to { transform: rotate(360deg); } }
+          @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.8; } }
+          #initial-loader .spinner { width: 48px; height: 48px; border: 2px solid rgba(255,255,255,0.1); border-top-color: #0ea5e9; border-radius: 50%; animation: spin 0.8s linear infinite; }
+          #initial-loader .pulse { width: 24px; height: 24px; background: rgba(14,165,233,0.3); border-radius: 50%; animation: pulse 1.5s ease-in-out infinite; position: absolute; }
+          #initial-loader .text { margin-top: 20px; color: rgba(255,255,255,0.5); font-family: system-ui, sans-serif; font-size: 14px; }
+        </style>
+        <div style="position: relative; display: flex; align-items: center; justify-content: center;">
+          <div class="spinner"></div>
+          <div class="pulse"></div>
+        </div>
+        <p class="text">Loading...</p>
+      </div>
+    </div>
+    
     <script type="module" src="/index.tsx"></script>
+    
+    <!-- Remove loader once React mounts -->
+    <script>
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          var loader = document.getElementById('initial-loader');
+          if (loader && loader.parentNode.children.length > 1) {
+            loader.remove();
+          }
+        }, 100);
+      });
+    </script>
   </body>
 </html>
