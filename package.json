@@ -1,12 +1,17 @@
 {
   "name": "highshift-media-ai-consultation",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "description": "Highshift Media - AI Agency for Business Automation. Custom AI agents, chatbots, marketing automation, and enterprise LLM integration.",
+  "author": "Highshift Media <info@highshiftmedia.com>",
+  "homepage": "https://highshiftmedia.com",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:analyze": "vite build --mode analyze",
+    "lint": "tsc --noEmit"
   },
   "dependencies": {
     "@google/genai": "^1.27.0",

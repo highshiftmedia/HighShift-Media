@@ -1,0 +1,12 @@
+# Highshift Media Security Contact
+# https://highshiftmedia.com/.well-known/security.txt
+
+Contact: mailto:security@highshiftmedia.com
+Contact: mailto:info@highshiftmedia.com
+Expires: 2025-12-31T23:59:59.000Z
+Preferred-Languages: en
+Canonical: https://highshiftmedia.com/.well-known/security.txt
+Policy: https://highshiftmedia.com/security-policy
+
+# If you discover a security vulnerability, please report it to us.
+# We appreciate your help in keeping our users and platform safe.
