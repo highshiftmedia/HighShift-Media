@@ -8,6 +8,7 @@ import { GlassCard } from '../components/ui/GlassCard';
 import { Button } from '../components/ui/Button';
 import { GradientText } from '../components/ui/FloatingElements';
 import { BrandLogo, INDUSTRY_AGENTS } from '../constants';
+import { openCalendlyWithEmail } from '../utils/calendly';
 import {
   ArrowRight, Sparkles, Zap, Shield, BarChart3, MessageSquare,
   Bot, Megaphone, Play, ChevronRight, Check, Star, Cpu, Workflow, Layers, HelpCircle
@@ -437,11 +438,7 @@ export const Landing: React.FC = () => {
                 Let's discuss how AI can transform your business.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Button size="lg" icon={<ArrowRight className="h-5 w-5" />} onClick={() => {
-                  if (window.Calendly) {
-                    window.Calendly.showPopupWidget('https://calendly.com/tech-highshiftmedia/30min');
-                  }
-                }}>
+                <Button size="lg" icon={<ArrowRight className="h-5 w-5" />} onClick={() => openCalendlyWithEmail('landing-cta')}>
                   Schedule Consultation
                 </Button>
                 <Link to="/demos">
