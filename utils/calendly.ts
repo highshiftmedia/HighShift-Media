@@ -26,7 +26,7 @@ declare global {
 }
 
 // Default Calendly URL
-const CALENDLY_URL = 'https://calendly.com/d/cyb7-typ-hny/schedule-consultation';
+const CALENDLY_URL = 'https://calendly.com/d/cxff-b85-5pd/schedule-ai-consultation';
 
 interface CalendlyOptions {
   email?: string;
